@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "geodesic:block/black_colored_forcefield"
+  }
+}
