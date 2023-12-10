@@ -73,6 +73,7 @@ object Solver {
                     // Constants
                     "e" -> numstack.push(Math.E)
                     "pi" -> numstack.push(Math.PI)
+                    "phi" -> numstack.push(1.618033988749895)
                     "tau" -> numstack.push(Math.PI * 2.0)
                     "true" -> boolstack.push(true)
                     "false" -> boolstack.push(false)
