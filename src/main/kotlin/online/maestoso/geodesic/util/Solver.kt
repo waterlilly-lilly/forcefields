@@ -35,6 +35,7 @@ object Solver {
                     "%" -> numstack.push(numstack.pop() % numstack.pop())
                     "^" -> numstack.push(Math.pow(numstack.pop(), numstack.pop()))
                     // Advanced arithmetic/trigonometric
+                    // Most of these operations are copied from https://worldedit.enginehub.org/en/latest/usage/other/expressions/
                     "abs" -> numstack.push(abs(numstack.pop()))
                     "acos" -> numstack.push(acos(numstack.pop()))
                     "asin" -> numstack.push(asin(numstack.pop()))
@@ -68,6 +69,7 @@ object Solver {
                     "||" -> boolstack.push(boolstack.pop() || boolstack.pop())
                     "&&" -> boolstack.push(boolstack.pop() && boolstack.pop())
                     "xor" -> boolstack.push(boolstack.pop() xor boolstack.pop())
+                    "->" -> numstack.push(if(boolstack.pop()) { 1.0 } else { 0.0 })
                     // Constants
                     "e" -> numstack.push(Math.E)
                     "pi" -> numstack.push(Math.PI)
