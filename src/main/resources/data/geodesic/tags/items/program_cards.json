@@ -1,0 +1,9 @@
+{
+  "replace": "false",
+  "values": [
+    "geodesic:program_card_blank",
+    "geodesic:program_card_shape",
+    "geodesic:program_card_range",
+    "geodesic:program_card_color"
+  ]
+}

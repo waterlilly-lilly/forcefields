@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "geodesic:forcefield",
+    "geodesic:invisible_forcefield",
+    "geodesic:white_colored_forcefield",
+    "geodesic:orange_colored_forcefield",
+    "geodesic:magenta_colored_forcefield",
+    "geodesic:light_blue_colored_forcefield",
+    "geodesic:yellow_colored_forcefield",
+    "geodesic:lime_colored_forcefield",
+    "geodesic:pink_colored_forcefield",
+    "geodesic:gray_colored_forcefield",
+    "geodesic:light_gray_colored_forcefield",
+    "geodesic:cyan_colored_forcefield",
+    "geodesic:purple_colored_forcefield",
+    "geodesic:blue_colored_forcefield",
+    "geodesic:brown_colored_forcefield",
+    "geodesic:green_colored_forcefield",
+    "geodesic:red_colored_forcefield",
+    "geodesic:black_colored_forcefield"
+  ]
+}

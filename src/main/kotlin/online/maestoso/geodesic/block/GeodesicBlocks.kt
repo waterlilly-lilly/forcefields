@@ -1,6 +1,7 @@
 package online.maestoso.geodesic.block
 
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.quiltmc.loader.api.ModContainer
@@ -8,7 +9,7 @@ import org.quiltmc.qkl.library.registry.*
 
 class GeodesicBlocks(mod: ModContainer) {
     companion object {
-        val FORCEFIELD_BLOCKS = TagKey.of(Registries.BLOCK.key, Identifier("geodesic:forcefields"))
+        val FORCEFIELD_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Identifier("geodesic:forcefields"))
     }
     init {
         Registries.BLOCK(mod.metadata().id()) {

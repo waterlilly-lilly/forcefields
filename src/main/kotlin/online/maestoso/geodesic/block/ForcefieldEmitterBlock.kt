@@ -5,6 +5,12 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.registry.Registries
+import net.minecraft.text.Text
+import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
+import net.minecraft.util.Identifier
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
@@ -13,10 +19,11 @@ import net.minecraft.world.WorldAccess
 import online.maestoso.geodesic.util.Math
 import online.maestoso.geodesic.block.entity.ForcefieldEmitterBlockEntity
 import online.maestoso.geodesic.block.entity.GeodesicBlockEntityTypes
+import online.maestoso.geodesic.item.ProgramCardItem
 import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings
 import kotlin.jvm.optionals.getOrNull
 
-object ForcefieldEmitterBlock : BlockWithEntity(QuiltBlockSettings.create()) {
+object ForcefieldEmitterBlock : BlockWithEntity(QuiltBlockSettings.create().strength(8.0f).requiresTool()) {
     override fun getRenderType(state: BlockState?) = BlockRenderType.MODEL
     override fun createBlockEntity(pos: BlockPos, state: BlockState) = ForcefieldEmitterBlockEntity(pos, state)
     override fun getOutlineShape(
@@ -49,5 +56,50 @@ object ForcefieldEmitterBlock : BlockWithEntity(QuiltBlockSettings.create()) {
     override fun onBreak(world: World?, pos: BlockPos?, state: BlockState?, player: PlayerEntity?) {
         super.onBreak(world, pos, state, player)
         (world?.getBlockEntity(pos) as? ForcefieldEmitterBlockEntity)?.destroyForcefield()
+    }
+
+    override fun onUse(
+        state: BlockState?,
+        world: World?,
+        pos: BlockPos?,
+        player: PlayerEntity?,
+        hand: Hand?,
+        hit: BlockHitResult?
+    ): ActionResult {
+        val entity = world?.getBlockEntity(pos) as? ForcefieldEmitterBlockEntity ?: return ActionResult.FAIL
+        val nbt = player?.mainHandStack?.nbt
+        when(player?.mainHandStack?.item) {
+            ProgramCardItem.BLANK -> {
+                entity.attributeStore.range = 0
+                entity.attributeStore.predicate = "false"
+                entity.attributeStore.blockType = ForcefieldBlock.FORCEFIELD
+
+                player.sendMessage(Text.literal("Cleared all emitter attributes"), true)
+                entity.destroyForcefield()
+                return ActionResult.SUCCESS
+            }
+            ProgramCardItem.COLOR -> {
+                nbt ?: return ActionResult.FAIL
+                entity.attributeStore.blockType = Registries.BLOCK.get(Identifier(nbt.getString("Color")))
+                player.sendMessage(Text.literal("Set color to ").append(Text.translatable(entity.attributeStore.blockType.translationKey)), true)
+                entity.destroyForcefield()
+                return ActionResult.SUCCESS
+            }
+            ProgramCardItem.RANGE -> {
+                nbt ?: return ActionResult.FAIL
+                entity.attributeStore.range = nbt.getInt("Range")
+                player.sendMessage(Text.literal("Set range to ").append(Text.literal(entity.attributeStore.range.toString())), true)
+                entity.destroyForcefield()
+                return ActionResult.SUCCESS
+            }
+            ProgramCardItem.SHAPE -> {
+                nbt ?: return ActionResult.FAIL
+                entity.attributeStore.predicate = nbt.getString("Shape")
+                player.sendMessage(Text.literal("Updated shape"), true)
+                entity.destroyForcefield()
+                return ActionResult.SUCCESS
+            }
+            else -> return ActionResult.PASS
+        }
     }
 }
