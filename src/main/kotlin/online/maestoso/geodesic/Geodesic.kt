@@ -1,5 +1,7 @@
 package online.maestoso.geodesic
 
+import online.maestoso.geodesic.block.GeodesicBlocks
+import online.maestoso.geodesic.block.entity.GeodesicBlockEntityTypes
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer
 import org.slf4j.Logger
@@ -11,6 +13,6 @@ object Geodesic : ModInitializer {
     override fun onInitialize(mod: ModContainer) {
         LOGGER.info("Hello Quilt world from {}!", mod.metadata()?.name())
         GeodesicBlocks(mod)
-
+        GeodesicBlockEntityTypes(mod)
     }
 }

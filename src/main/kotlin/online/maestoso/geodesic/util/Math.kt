@@ -1,26 +1,24 @@
 package online.maestoso.geodesic.util
 
+import net.minecraft.util.shape.VoxelShapes
+import java.lang.Math
 import java.lang.NumberFormatException
 import java.util.*
 import kotlin.math.*
 
-object Solver {
+object Math {
     enum class Result {
         TRUE, FALSE, ERR_EMPTY_STACK, ERR_NUM_FORMAT
     }
-    fun solve(x: Int, y: Int, z: Int, i: Int, j: Int, k: Int, predicate: String): Result {
+    fun solve(r: Int, i: Int, j: Int, k: Int, predicate: String): Result {
         val numstack: Stack<Double> = Stack()
         val boolstack: Stack<Boolean> = Stack()
         predicate.split(' ').forEach { n ->
             try {
                 when(n) {
                     // External variables
-                    "x" -> numstack.push(x.toDouble())
-                    "-x" -> numstack.push(-x.toDouble())
-                    "y" -> numstack.push(y.toDouble())
-                    "-y" -> numstack.push(-y.toDouble())
-                    "z" -> numstack.push(z.toDouble())
-                    "-z" -> numstack.push(-z.toDouble())
+                    "r" -> numstack.push(r.toDouble())
+                    "-r" -> numstack.push(-r.toDouble())
                     "i" -> numstack.push(i.toDouble())
                     "-i" -> numstack.push(-i.toDouble())
                     "j" -> numstack.push(j.toDouble())
@@ -88,6 +86,11 @@ object Solver {
                 return Result.ERR_NUM_FORMAT
             }
         }
-        return if(boolstack.pop() == true) {Result.TRUE} else {Result.FALSE}
+        return if(boolstack.pop() == true) {
+            Result.TRUE
+        } else {
+            Result.FALSE
+        }
     }
+    fun cuboidpx(minX: Int, minY: Int, minZ: Int, maxX: Int, maxY: Int, maxZ: Int) = VoxelShapes.cuboid(minX / 16.0, minY / 16.0, minZ / 16.0, maxX / 16.0, maxY / 16.0, maxZ / 16.0)
 }
